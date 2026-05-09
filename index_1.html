@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Voice Report 2025 — Balgowlah Boys Campus</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+/* ── BALLY BRAND PALETTE ──────────────────────────────────────
+   Navy   : #003057  (deep school navy, from uniform/crest)
+   Gold   : #C8971A  (school gold/amber, from crest shield)
+   White  : #FFFFFF
+   Light bg: #F4F6F9 (off-white with a blue tint, clean)
+   Border : #D6DCE4
+──────────────────────────────────────────────────────────── */
+:root {
+  --navy:      #003057;
+  --navy-dark: #001f3d;
+  --navy-mid:  #004278;
+  --navy-light:#005599;
+  --gold:      #C8971A;
+  --gold-light:#E0AE30;
+  --gold-pale: #FDF3DC;
+  --white:     #FFFFFF;
+  --bg:        #F4F6F9;
+  --bg2:       #EBF0F5;
+  --text:      #0D1F35;
+  --muted:     #4A6080;
+  --subtle:    #7A93AD;
+  --border:    #D0D8E4;
+  --border2:   #B8C4D4;
+  --gap:       5rem;
+
+  /* chart accent colours — all harmonise with navy/gold */
+  --c1: #C8971A;  /* gold   — canteen */
+  --c2: #005599;  /* blue   — sport   */
+  --c3: #8B1A1A;  /* dark red — teacher conduct */
+  --c4: #5B4A8A;  /* purple — breaks  */
+  --c5: #2E6B5E;  /* teal   — facilities */
+  --c6: #A0365A;  /* rose   — wellbeing */
+  --c7: #3D6B2E;  /* green  — phones  */
+  --c8: #6B6055;  /* warm grey — homework */
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); font-size:16px; line-height:1.75; overflow-x:hidden }
+
+/* ── NAV ─────────────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:300;
+  height:62px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 2.5rem;
+  background:var(--navy-dark);
+  border-bottom:3px solid var(--gold);
+}
+.nav-left { display:flex; align-items:center; gap:14px; text-decoration:none }
+.nav-crest {
+  width:38px; height:38px; flex-shrink:0;
+  background:var(--gold); border-radius:4px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Merriweather',serif; font-size:11px; font-weight:900;
+  color:var(--navy-dark); letter-spacing:.02em; line-height:1.2; text-align:center;
+}
+.nav-school { display:flex; flex-direction:column; gap:1px }
+.nav-school-name { font-family:'Merriweather',serif; color:var(--white); font-size:13px; font-weight:700; line-height:1 }
+.nav-school-sub { color:var(--gold-light); font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase }
+.nav-links { display:flex; gap:2rem; list-style:none }
+.nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:12px; font-weight:500; letter-spacing:.07em; text-transform:uppercase; transition:color .2s; padding-bottom:2px; border-bottom:2px solid transparent }
+.nav-links a:hover { color:var(--gold-light); border-bottom-color:var(--gold-light) }
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:9rem 2rem 6rem;
+  background:var(--navy-dark); color:white; position:relative; overflow:hidden;
+}
+/* diagonal stripe texture */
+.hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(
+    -55deg,
+    transparent, transparent 40px,
+    rgba(200,151,26,0.025) 40px, rgba(200,151,26,0.025) 41px
+  );
+}
+/* gold bottom border accent */
+.hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:4px; background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-badge {
+  position:relative;
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid rgba(200,151,26,0.5);
+  color:var(--gold-light); font-size:11px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:8px 20px; border-radius:3px; margin-bottom:2.5rem;
+  background:rgba(200,151,26,0.08);
+}
+.hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0 }
+.hero-divider {
+  width:60px; height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  border-radius:2px; margin:1.5rem auto 1.5rem; position:relative;
+}
+.hero h1 {
+  position:relative;
+  font-family:'Merriweather',serif;
+  font-size:clamp(2.6rem,6.5vw,5rem);
+  line-height:1.1; font-weight:900;
+  max-width:840px; margin-bottom:0;
+  letter-spacing:-.02em;
+}
+.hero h1 em { font-style:italic; font-weight:400; color:var(--gold-light) }
+.hero-sub {
+  position:relative; font-size:17px;
+  color:rgba(255,255,255,0.55); max-width:540px;
+  margin-bottom:3.5rem; font-weight:300; line-height:1.85;
+}
+.hero-stats {
+  position:relative;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; max-width:720px; width:100%;
+  border:1px solid rgba(200,151,26,0.3); border-radius:8px; overflow:hidden;
+}
+.hero-stat {
+  background:rgba(0,32,61,0.6);
+  padding:1.5rem 1rem; text-align:center;
+  border-right:1px solid rgba(200,151,26,0.15);
+  transition:background .2s;
+}
+.hero-stat:last-child { border-right:none }
+.hero-stat:hover { background:rgba(0,66,120,0.5) }
+.hero-stat .n {
+  font-family:'Merriweather',serif;
+  font-size:2.5rem; color:var(--gold-light); line-height:1; margin-bottom:6px; font-weight:700;
+}
+.hero-stat .l { font-size:11px; color:rgba(255,255,255,0.4); font-weight:400; letter-spacing:.03em }
+.hero-scroll {
+  position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  color:rgba(255,255,255,0.2); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+}
+.hero-scroll::after {
+  content:''; width:1px; height:40px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrl 2s ease-in-out infinite;
+}
+@keyframes scrl { 0%,100%{opacity:.2} 50%{opacity:.7} }
+
+/* ── SCHOOL STRIP ─────────────────────────────────── */
+.strip {
+  background:var(--navy); color:rgba(255,255,255,0.5);
+  padding:.85rem 2rem; font-size:12px; font-weight:400;
+  display:flex; justify-content:center; align-items:center;
+  gap:1.75rem; flex-wrap:wrap; letter-spacing:.03em;
+  border-bottom:1px solid rgba(200,151,26,0.2);
+}
+.strip b { color:var(--gold-light); font-weight:500 }
+.strip-sep { color:rgba(200,151,26,0.3) }
+
+/* ── SECTIONS ─────────────────────────────────────── */
+section { padding:var(--gap) 2rem; max-width:1020px; margin:0 auto }
+.slabel {
+  font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:.6rem;
+  display:flex; align-items:center; gap:8px;
+}
+.slabel::before { content:''; width:24px; height:2px; background:var(--gold); border-radius:1px }
+.stitle {
+  font-family:'Merriweather',serif;
+  font-size:clamp(1.9rem,4vw,2.8rem); font-weight:900;
+  line-height:1.15; margin-bottom:.9rem; color:var(--navy-dark);
+  letter-spacing:-.02em;
+}
+.stitle em { font-style:italic; font-weight:400; color:var(--navy-mid) }
+.sintro { font-size:16px; color:var(--muted); max-width:620px; margin-bottom:3rem; font-weight:300; line-height:1.85 }
+.divider { width:100%; height:1px; background:var(--border); max-width:1020px; margin:0 auto }
+
+/* ── CARDS ────────────────────────────────────────── */
+.card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:10px; padding:2.25rem; margin-bottom:2rem;
+  box-shadow:0 1px 4px rgba(0,32,60,0.05);
+  transition:box-shadow .25s;
+}
+.card:hover { box-shadow:0 4px 20px rgba(0,32,60,0.08) }
+/* gold left-border accent on chart cards */
+.card-chart { border-left:4px solid var(--gold) }
+.card-title { font-size:14px; font-weight:600; color:var(--navy-dark); margin-bottom:3px }
+.card-sub { font-size:13px; color:var(--subtle); margin-bottom:.6rem }
+.card-hint {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12px; font-weight:600; color:var(--navy-mid);
+  background:var(--bg2); border:1px solid var(--border);
+  padding:4px 12px; border-radius:3px; margin-bottom:1.25rem;
+}
+.legend { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:1.25rem }
+.legend span { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted) }
+.legend .d { width:9px; height:9px; border-radius:2px; flex-shrink:0 }
+.chart-wrap { position:relative; width:100% }
+
+/* ── MODAL ────────────────────────────────────────── */
+.overlay {
+  position:fixed; inset:0; z-index:600;
+  background:rgba(0,20,45,0.82); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center; padding:1.5rem;
+  opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.overlay.open { opacity:1; pointer-events:all }
+.modal {
+  background:var(--white); border-radius:12px;
+  width:100%; max-width:700px; max-height:90vh; overflow-y:auto;
+  transform:translateY(24px) scale(.97);
+  transition:transform .3s cubic-bezier(.22,.68,0,1.2);
+  box-shadow:0 32px 100px rgba(0,20,45,0.4);
+  border-top:4px solid var(--gold);
+}
+.overlay.open .modal { transform:translateY(0) scale(1) }
+.mhdr { padding:2rem 2.25rem 1.75rem; position:relative; background:var(--navy-dark); border-radius:8px 8px 0 0 }
+.mclose {
+  position:absolute; top:1.25rem; right:1.25rem;
+  background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15);
+  color:white; width:32px; height:32px; border-radius:4px;
+  cursor:pointer; font-size:15px; display:flex; align-items:center;
+  justify-content:center; transition:background .2s; line-height:1;
+}
+.mclose:hover { background:rgba(255,255,255,0.2) }
+.mtag {
+  font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  padding:4px 10px; border-radius:3px; display:inline-block; margin-bottom:10px;
+  background:rgba(200,151,26,0.2); color:var(--gold-light);
+  border:1px solid rgba(200,151,26,0.3);
+}
+.mtitle { font-family:'Merriweather',serif; font-size:1.6rem; color:white; font-weight:700; line-height:1.2; margin-bottom:6px }
+.mtagline { font-size:14px; color:rgba(255,255,255,.45); font-weight:300 }
+.mbody { padding:1.75rem 2.25rem 2.25rem }
+.mstats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1.5rem }
+.mstat { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:.9rem; text-align:center }
+.mstat .v { font-family:'Merriweather',serif; font-size:1.8rem; color:var(--navy-dark); font-weight:700 }
+.mstat .l { font-size:11px; color:var(--subtle); margin-top:2px }
+.msub-head {
+  font-size:10px; font-weight:700; color:var(--navy-dark); letter-spacing:.12em;
+  text-transform:uppercase; margin:1.5rem 0 .6rem;
+  padding-bottom:6px; border-bottom:2px solid var(--gold);
+  display:inline-block;
+}
+.mdetail { background:var(--bg); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:1rem 1.2rem; margin-bottom:1.25rem; font-size:14px; color:var(--muted); line-height:1.75 }
+.mquote { background:var(--bg); border-left:3px solid; border-radius:0 8px 8px 0; padding:.9rem 1.15rem; margin-bottom:.7rem; font-size:13.5px; color:var(--muted); font-style:italic; line-height:1.75 }
+.mquote .mn { font-style:normal; font-size:11.5px; color:var(--subtle); margin-top:5px }
+
+/* ── WINS ─────────────────────────────────────────── */
+.wins { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-bottom:3rem }
+.wcard {
+  background:var(--white); border:1px solid var(--border);
+  border-top:3px solid var(--navy);
+  border-radius:0 0 10px 10px; padding:1.5rem;
+  transition:transform .2s, box-shadow .2s;
+}
+.wcard:hover { transform:translateY(-4px); box-shadow:0 10px 36px rgba(0,32,60,0.1) }
+.wcard.gold-top { border-top-color:var(--gold) }
+.wcard.navy-top { border-top-color:var(--navy) }
+.wbadge { font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; padding:3px 10px; border-radius:3px; display:inline-block; margin-bottom:10px }
+.blow { background:var(--gold-pale); color:#7a5200; border:1px solid rgba(200,151,26,0.3) }
+.bmed { background:#EBF0F5; color:var(--navy); border:1px solid var(--border) }
+.wtitle { font-size:15px; font-weight:600; color:var(--navy-dark); margin-bottom:6px; line-height:1.35 }
+.wdesc { font-size:13px; color:var(--muted); line-height:1.65 }
+
+/* ── QUOTES DARK ─────────────────────────────────── */
+.qsec { background:var(--navy-dark); padding:var(--gap) 2rem; border-top:4px solid var(--gold) }
+.qinner { max-width:1020px; margin:0 auto }
+.qsec .stitle { color:white }
+.qsec .sintro { color:rgba(255,255,255,.45) }
+.qsec .slabel { color:var(--gold-light) }
+.qsec .slabel::before { background:var(--gold-light) }
+.qgrid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem }
+.qcard {
+  background:rgba(0,66,120,0.35); border:1px solid rgba(200,151,26,0.15);
+  border-radius:8px; padding:1.5rem; transition:background .2s;
+}
+.qcard:hover { background:rgba(0,66,120,0.5) }
+.qtag { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border-radius:3px; display:inline-block; margin-bottom:12px; border:1px solid }
+/* all tags use navy/gold palette variants */
+.qtw { background:rgba(200,151,26,.15); color:#e8c060; border-color:rgba(200,151,26,.3) }
+.qtt { background:rgba(139,26,26,.2); color:#f0847a; border-color:rgba(139,26,26,.3) }
+.qta { background:rgba(91,74,138,.2); color:#b8b0e8; border-color:rgba(91,74,138,.3) }
+.qte { background:rgba(160,54,90,.2); color:#e891b0; border-color:rgba(160,54,90,.3) }
+.qtc { background:rgba(0,85,153,.25); color:#80bfff; border-color:rgba(0,85,153,.35) }
+.qti { background:rgba(46,107,94,.2); color:#7dcec0; border-color:rgba(46,107,94,.3) }
+.qtext { font-size:14px; color:rgba(255,255,255,.78); font-style:italic; line-height:1.8; margin-bottom:10px }
+.qnote { font-size:12px; color:rgba(255,255,255,.28) }
+
+/* ── TABLE ───────────────────────────────────────── */
+.rtbl { width:100%; border-collapse:collapse; font-size:14px; background:var(--white); border-radius:10px; overflow:hidden; border:1px solid var(--border) }
+.rtbl th { background:var(--navy); color:rgba(255,255,255,.7); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:14px 18px; text-align:left }
+.rtbl th:first-child { border-left:4px solid var(--gold) }
+.rtbl td { padding:13px 18px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text) }
+.rtbl tr:last-child td { border-bottom:none }
+.rtbl tr:hover td { background:var(--bg2) }
+.rtbl td:first-child { font-weight:600; color:var(--navy-dark) }
+.pill { display:inline-block; font-size:11px; font-weight:600; padding:3px 10px; border-radius:3px; letter-spacing:.04em }
+.plo { background:var(--gold-pale); color:#7a5200; border:1px solid rgba(200,151,26,.3) }
+.pme { background:#EBF0F5; color:var(--navy); border:1px solid var(--border) }
+.phi { background:#FBE9E9; color:#8B1A1A; border:1px solid rgba(139,26,26,.25) }
+.pim { background:rgba(0,48,87,.08); color:var(--navy); border:1px solid rgba(0,48,87,.2) }
+
+/* ── ABOUT STRIP ─────────────────────────────────── */
+.about { background:var(--navy); padding:3.5rem 2rem; border-top:1px solid rgba(200,151,26,0.2); border-bottom:4px solid var(--gold) }
+.about-inner { max-width:1020px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2rem }
+.afact { border-left:3px solid var(--gold); padding-left:1.25rem }
+.afact .av { font-family:'Merriweather',serif; font-size:2.2rem; color:var(--gold-light); line-height:1; margin-bottom:5px; font-weight:700 }
+.afact .al { font-size:13px; color:rgba(255,255,255,.45); font-weight:300; line-height:1.6 }
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer { background:var(--navy-dark); color:rgba(255,255,255,.35); text-align:center; padding:2.5rem 2rem; font-size:13px }
+footer .motto { font-family:'Merriweather',serif; font-style:italic; color:var(--gold); font-size:16px; display:block; margin-bottom:.6rem }
+footer strong { color:rgba(255,255,255,.65) }
+
+/* ── FADE IN ─────────────────────────────────────── */
+.fi { opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease }
+.fi.vis { opacity:1; transform:translateY(0) }
+canvas { cursor:pointer }
+
+@media(max-width:720px) {
+  .hero-stats { grid-template-columns:repeat(2,1fr) }
+  .wins { grid-template-columns:1fr 1fr }
+  .qgrid { grid-template-columns:1fr }
+  .nav-links { display:none }
+  .mstats { grid-template-columns:1fr 1fr }
+  .about-inner { grid-template-columns:1fr 1fr }
+  .strip { gap:1rem }
+}
+@media(max-width:480px) {
+  .wins { grid-template-columns:1fr }
+  .about-inner { grid-template-columns:1fr }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-left" href="#">
+    <div class="nav-crest">BALLY<br>BOYS</div>
+    <div class="nav-school">
+      <span class="nav-school-name">Balgowlah Boys Campus</span>
+      <span class="nav-school-sub">Student Council · 2025</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#voices">Student Voices</a></li>
+    <li><a href="#recommendations">Recommendations</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Student Council · Board of Education Presentation · 2025</div>
+  <h1>What our students <em>actually</em> think</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">A data-driven survey of student experience at Balgowlah Boys Campus — compiled and presented by the Student Council to the Board of Education.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="n">~170</div><div class="l">Total responses</div></div>
+    <div class="hero-stat"><div class="n">2</div><div class="l">Survey questions</div></div>
+    <div class="hero-stat"><div class="n">8</div><div class="l">Major themes</div></div>
+    <div class="hero-stat"><div class="n">6</div><div class="l">Quick win actions</div></div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</div>
+
+<!-- SCHOOL STRIP -->
+<div class="strip">
+  <span><b>Balgowlah Boys Campus</b> · Northern Beaches Secondary College</span>
+  <span class="strip-sep">|</span>
+  <span>Est. <b>1954</b> · 27 Maretimo St, Balgowlah NSW</span>
+  <span class="strip-sep">|</span>
+  <span>~<b>1,200</b> students · Years 7–12</span>
+  <span class="strip-sep">|</span>
+  <span><i>"By Effort We Achieve"</i></span>
+</div>
+
+<!-- FINDINGS -->
+<section id="findings">
+  <div class="fi">
+    <p class="slabel">Survey Findings</p>
+    <h2 class="stitle">Where students want <em>change</em></h2>
+    <p class="sintro">Responses coded across both survey questions into eight themes. Click any bar or bubble to drill in — see quotes, sub-breakdowns, and full context.</p>
+  </div>
+
+  <div class="card card-chart fi">
+    <div class="card-title">Theme frequency — both questions combined</div>
+    <div class="card-sub">Approximate mentions across ~170 responses</div>
+    <div class="card-hint">&#8594; Click any bar to explore that theme in detail</div>
+    <div class="legend">
+      <span><span class="d" style="background:var(--c1)"></span>Canteen too expensive / poor variety</span>
+      <span><span class="d" style="background:var(--c2)"></span>Not enough sport / outdoor space</span>
+      <span><span class="d" style="background:var(--c3)"></span>Poor teacher conduct / harsh discipline</span>
+      <span><span class="d" style="background:var(--c4)"></span>Breaks too short / days too long</span>
+      <span><span class="d" style="background:var(--c5)"></span>Outdated / insufficient facilities</span>
+      <span><span class="d" style="background:var(--c6)"></span>Lack of wellbeing / mental health support</span>
+      <span><span class="d" style="background:var(--c7)"></span>Restricted phone access</span>
+      <span><span class="d" style="background:var(--c8)"></span>Too much homework / workload</span>
+    </div>
+    <div class="chart-wrap" style="height:390px"><canvas id="themeChart" role="img" aria-label="Click any bar. Canteen leads at ~110 mentions."></canvas></div>
+  </div>
+
+  <div class="card card-chart fi">
+    <div class="card-title">Facilities & infrastructure — ranked requests</div>
+    <div class="card-sub">Mentions across both survey questions</div>
+    <div class="card-hint">&#8594; Click any bar to explore that request</div>
+    <div class="legend">
+      <span><span class="d" style="background:var(--c4)"></span>Bathrooms unlocked</span>
+      <span><span class="d" style="background:var(--c2)"></span>Sport equipment / courts</span>
+      <span><span class="d" style="background:var(--c5)"></span>Green space / oval access</span>
+      <span><span class="d" style="background:var(--c8)"></span>More seating / benches</span>
+      <span><span class="d" style="background:var(--c3)"></span>New buildings / renovations</span>
+      <span><span class="d" style="background:var(--c1)"></span>Shade / shelter</span>
+      <span><span class="d" style="background:var(--c6)"></span>Bike racks</span>
+      <span><span class="d" style="background:var(--c7)"></span>More microwaves</span>
+    </div>
+    <div class="chart-wrap" style="height:290px"><canvas id="infraChart" role="img" aria-label="Click any bar. Bathrooms and sport equipment lead."></canvas></div>
+  </div>
+
+  <div class="card card-chart fi">
+    <div class="card-title">Implementation ease vs student impact</div>
+    <div class="card-sub">Bubble size = relative mention volume · top-right = quick wins</div>
+    <div class="card-hint">&#8594; Click any bubble to explore that suggestion</div>
+    <div class="chart-wrap" style="height:390px"><canvas id="matrixChart" role="img" aria-label="Click any bubble."></canvas></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STUDENT VOICES -->
+<div class="qsec" id="voices">
+  <div class="qinner">
+    <div class="fi">
+      <p class="slabel">Student Voices</p>
+      <h2 class="stitle" style="color:white">In their <em>own words</em></h2>
+      <p class="sintro">Direct quotes — selected for themes that were highly recurring or uniquely significant, even if uncommon.</p>
+    </div>
+    <div class="qgrid fi">
+      <div class="qcard"><div class="qtag qtw">Wellbeing — personal</div><div class="qtext">"You could invite more people to the wellbeing room who are having a bad day — I have been invited to the room before but only 2 times in the 2 years I have been here."</div><div class="qnote">Signals a proactive outreach gap, not a resource gap</div></div>
+      <div class="qcard"><div class="qtag qtt">Teacher conduct</div><div class="qtext">"Teachers should stop screaming at kids and using fear to get kids to do what they want... teachers here that scream and harshly discipline children have a profoundly negative impact on students' wellbeing."</div><div class="qnote">Consistent across multiple independent responses</div></div>
+      <div class="qcard"><div class="qtag qtc">Assessment anxiety</div><div class="qtext">"Separate assessments by a week — it's hard to remember 7 subjects' info all in one week... spreading them out is a lot more calming and helps with potential anxiety."</div><div class="qnote">Specific, actionable, low-cost scheduling change</div></div>
+      <div class="qcard"><div class="qtag qta">Mental health access</div><div class="qtext">"Put a sign up near the library telling students where the mental health room is."</div><div class="qnote">A tiny intervention that could have high impact — students don't know it exists</div></div>
+      <div class="qcard"><div class="qtag qte">Social inclusion</div><div class="qtext">"Make sure that no one gets left out or feels like they're not good enough" and "create a more accepting environment."</div><div class="qnote">Aligns with the school's stated values of trust, care and resilience</div></div>
+      <div class="qcard"><div class="qtag qti">Outdoor safety</div><div class="qtext">"Add grass instead of quad because falling on the quad hurts a lot... if we open the oval across the road at lunch we can all play and be outside."</div><div class="qnote">Safety concern + practical use of Balgowlah oval nearby</div></div>
+      <div class="qcard"><div class="qtag qtt">Equal treatment</div><div class="qtext">"Equal student rights and no favourability" and "treating people how we want to be treated."</div><div class="qnote">Fairness perception — consistency in staff behaviour matters to students</div></div>
+      <div class="qcard"><div class="qtag qtc">Curriculum relevance</div><div class="qtext">"Subjects that help our everyday lives" and "better electives" and "allow 3 electives in Year 9 and 10."</div><div class="qnote">Students want curriculum relevance alongside academic rigour</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RECOMMENDATIONS -->
+<section id="recommendations">
+  <div class="fi">
+    <p class="slabel">Student Council Recommendations</p>
+    <h2 class="stitle">What we're <em>asking for</em></h2>
+    <p class="sintro">Prioritised by ease of implementation and student impact — realistic, low-cost, and directly supported by survey data. Consistent with the school's values of aspiration, care, and resilience.</p>
+  </div>
+
+  <div class="wins fi">
+    <div class="wcard gold-top"><div class="wbadge blow">Low effort</div><div class="wtitle">Sign for the mental health room</div><div class="wdesc">Students don't know the wellbeing room exists. A single sign near the library is potentially the highest-ROI action in this entire report.</div></div>
+    <div class="wcard gold-top"><div class="wbadge blow">Low effort</div><div class="wtitle">Ball borrowing system from PE</div><div class="wdesc">PE equipment already exists. A simple sign-out system at lunch gives students something active to do outdoors immediately.</div></div>
+    <div class="wcard gold-top"><div class="wbadge blow">Low effort</div><div class="wtitle">Unlock bathrooms at recess & lunch</div><div class="wdesc">The most repeated basic access request in the survey. A matter of dignity and daily comfort for every student.</div></div>
+    <div class="wcard navy-top"><div class="wbadge blow">Low effort</div><div class="wtitle">Proactive wellbeing room outreach</div><div class="wdesc">One student reported only two invitations in two years. The infrastructure exists — the gap is proactive reach-out.</div></div>
+    <div class="wcard navy-top"><div class="wbadge bmed">Medium effort</div><div class="wtitle">Stagger assessment schedules</div><div class="wdesc">A scheduling change, not a resource change. Students explicitly linked clustering of assessments to anxiety and reduced performance.</div></div>
+    <div class="wcard navy-top"><div class="wbadge bmed">Medium effort</div><div class="wtitle">Review canteen pricing</div><div class="wdesc">The #1 theme in the survey with ~110 mentions. The school's own canteen page is a natural starting point for a pricing review.</div></div>
+  </div>
+
+  <div class="fi">
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="rtbl">
+        <thead>
+          <tr><th>Action</th><th>Theme</th><th>Effort</th><th>Impact</th><th>Survey support</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mental health room signage</td><td>Wellbeing</td><td><span class="pill plo">Low</span></td><td><span class="pill pim">High</span></td><td>Direct quote from survey</td></tr>
+          <tr><td>PE ball borrowing system</td><td>Sport access</td><td><span class="pill plo">Low</span></td><td><span class="pill pim">High</span></td><td>Multiple specific mentions</td></tr>
+          <tr><td>Unlock bathrooms</td><td>Basic access</td><td><span class="pill plo">Low</span></td><td><span class="pill pim">High</span></td><td>Top 3 most repeated request</td></tr>
+          <tr><td>Wellbeing room outreach</td><td>Wellbeing</td><td><span class="pill plo">Low</span></td><td><span class="pill pim">High</span></td><td>Personal testimony + others</td></tr>
+          <tr><td>More seating / benches</td><td>Facilities</td><td><span class="pill plo">Low</span></td><td><span class="pill pim">High</span></td><td>~14 direct mentions</td></tr>
+          <tr><td>Stagger assessment weeks</td><td>Curriculum</td><td><span class="pill pme">Medium</span></td><td><span class="pill pim">High</span></td><td>Linked to anxiety by students</td></tr>
+          <tr><td>Anonymous mental health surveys</td><td>Wellbeing</td><td><span class="pill pme">Medium</span></td><td><span class="pill pim">High</span></td><td>Multiple independent requests</td></tr>
+          <tr><td>Review canteen pricing</td><td>Canteen</td><td><span class="pill pme">Medium</span></td><td><span class="pill pim">High</span></td><td>~110 mentions — #1 theme</td></tr>
+          <tr><td>Lunchtime oval access</td><td>Sport / outdoor</td><td><span class="pill pme">Medium</span></td><td><span class="pill pim">High</span></td><td>Two independent suggestions</td></tr>
+          <tr><td>Add shade / shelter to courts</td><td>Facilities</td><td><span class="pill pme">Medium</span></td><td><span class="pill pim">High</span></td><td>~7 mentions, wet-weather reason</td></tr>
+          <tr><td>Address teacher conduct concerns</td><td>Teaching culture</td><td><span class="pill phi">Complex</span></td><td><span class="pill pim">Very high</span></td><td>~45 mentions, detailed accounts</td></tr>
+          <tr><td>Grass / green space on quad</td><td>Facilities</td><td><span class="pill phi">Complex</span></td><td><span class="pill pim">High</span></td><td>~16 mentions incl. safety concern</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about">
+  <div class="about-inner">
+    <div class="afact"><div class="av">1954</div><div class="al">Founded as Balgowlah Boys High School — over 70 years educating Northern Beaches boys</div></div>
+    <div class="afact"><div class="av">#7</div><div class="al">Ranked 7th in NSW HSC among all comprehensive schools (2022 Annual Report)</div></div>
+    <div class="afact"><div class="av">Zone</div><div class="al">Named champion sporting school in the zone — an unrivalled regional sporting history</div></div>
+  </div>
+</div>
+
+<footer>
+  <span class="motto">"By Effort We Achieve"</span>
+  <strong>Balgowlah Boys Campus Student Council</strong> · Student Voice Survey 2025<br>
+  <span style="margin-top:5px;display:block">Northern Beaches Secondary College · Presented to the Board of Education · ~170 student responses</span>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="ov" role="dialog" aria-modal="true">
+  <div class="modal" id="mb">
+    <div class="mhdr" id="mh">
+      <button class="mclose" id="mc" aria-label="Close">&#10005;</button>
+      <div class="mtag" id="mt"></div>
+      <div class="mtitle" id="mti"></div>
+      <div class="mtagline" id="mta"></div>
+    </div>
+    <div class="mbody" id="mbo"></div>
+  </div>
+</div>
+
+<script>
+/* chart colour array — matches CSS vars */
+const CC=['#C8971A','#005599','#8B1A1A','#5B4A8A','#2E6B5E','#A0365A','#3D6B2E','#6B6055'];
+
+const THEMES=[
+  {label:'Canteen too expensive / poor variety',color:CC[0],mentions:110,tagline:'The loudest single voice in the entire survey',
+   stats:[{v:'~110',l:'Total mentions'},{v:'~65%',l:'Of all responses'},{v:'#1',l:'Ranked theme'}],
+   subChart:{type:'doughnut',labels:['Cheaper prices','More variety / options','Fix ordering system','More seating'],data:[60,28,7,5],colors:['#C8971A','#E0AE30','#F0CC7A','#A07010'],note:'What students specifically want changed about the canteen'},
+   quotes:[
+    {t:'"Lower the prices — also make Waterfords $3.50 not $4!! What gives even more anxiety is going to the canteen and seeing a Waterford is $4!!!!"',n:'The frustration is deeply felt — canteen pricing affects daily student experience'},
+    {t:'"Cheaper canteen food" and "more food in the canteen" — among the most repeated phrases in the entire survey',n:'Appeared independently across dozens of responses'},
+    {t:'"Sell chicken parma" / "sell brownies" / "acia bowl in canteen" / "hot chips at canteen $4.50" / "make the canteen sell Chinese food"',n:'Students want variety, not just lower prices'},
+    {t:'"More brand name options at the canteen" — appeared twice independently',n:'Familiarity and choice matter to students'},
+    {t:'"My mates love to sit around the canteen — some new metal tables would be great to replace those worse wooden ones and will boost morale"',n:'The canteen is a social hub — environment matters too'},
+    {t:'"FIX THE LUNCH ORDER SYSTEM"',n:'Written in full capitals — a significant ongoing frustration'}
+   ]},
+  {label:'Not enough sport / outdoor space',color:CC[1],mentions:70,tagline:'Students want to move, play, and be outside',
+   stats:[{v:'~70',l:'Total mentions'},{v:'#2',l:'Ranked theme'},{v:'~40%',l:'Of responses'}],
+   subChart:{type:'bar',labels:['More basketball\nhoops','Borrowable\nballs from PE','Soccer goals\non quad','Lunchtime\noval access','More sport\nevents','Open sports\nfor all'],data:[18,14,10,9,12,7],colors:Array(6).fill(CC[1]),note:'Sub-requests within the sport / outdoor space theme'},
+   quotes:[
+    {t:'"Most IMPORTANTLY: work out a system to allow students to borrow balls from PE at lunch or an assigned small heap of balls for people to play with at lunch"',n:'Written with emphasis — this student felt strongly about it'},
+    {t:'"Maybe at lunch time we could go over to Balgowlah oval and play footy and stuff"',n:'An existing nearby resource currently unused at lunch'},
+    {t:'"Add grass instead of quad because falling on the quad hurts a lot"',n:'Safety concern embedded in a sport request'},
+    {t:'"More open sports for anyone" — the school has strong sporting traditions; students want that extended to all',n:'Access for all students, not just elite sport'},
+    {t:'"Maybe more cover for the handball courts as when it rains it is hard to play"',n:'Simple infrastructure fix that would unlock daily outdoor activity'}
+   ]},
+  {label:'Poor teacher conduct / harsh discipline',color:CC[2],mentions:45,tagline:'A significant concern — grew stronger in the second question',
+   stats:[{v:'~45',l:'Total mentions'},{v:'#3',l:'Ranked theme'},{v:'Higher',l:'In Q2 vs Q1'}],
+   quotes:[
+    {t:'"Teachers should stop screaming at kids and using fear to get kids to do what they want"',n:'Direct, clear, and concerning'},
+    {t:'"Teachers here that scream and harshly discipline children have a profoundly negative impact on the students\' wellbeing"',n:'The most articulate response on this theme'},
+    {t:'"Teachers should be more lenient on kids and realise that what they say affects students more than they realise — students are already navigating a difficult and awkward period in their life"',n:'Shows emotional maturity and self-awareness from the respondent'},
+    {t:'"Equal student rights and no favourability"',n:'Perceived inconsistency in how students are treated'},
+    {t:'"Get rid of teachers who degrade students\' mental health"',n:'Multiple students used similar language independently'}
+   ]},
+  {label:'Breaks too short / days too long',color:CC[3],mentions:42,tagline:'Students want more time to decompress and socialise',
+   stats:[{v:'~42',l:'Total mentions'},{v:'#4',l:'Ranked theme'},{v:'Recess',l:'Most requested'}],
+   quotes:[
+    {t:'"Longer breaks: 30 mins recess and 40 mins lunch"',n:'Specific timing requested'},
+    {t:'"Longer recess and lunch" — appeared in many variations across both questions',n:'Consistent across the whole dataset'},
+    {t:'"Give bigger breaks in between classes"',n:'Students want breathing room between demanding lessons'},
+    {t:'"End at 2 on Thursdays" and "shorter days 9:30–3:00"',n:'Creative scheduling suggestions'},
+    {t:'"Make the days shorter and we can eat in class"',n:'Students proposing their own solutions to feel less restricted'}
+   ]},
+  {label:'Outdated / insufficient facilities',color:CC[4],mentions:38,tagline:'Physical environment affects learning and daily wellbeing',
+   stats:[{v:'~38',l:'Total mentions'},{v:'#5',l:'Ranked theme'},{v:'Bathrooms',l:'Top request'}],
+   quotes:[
+    {t:'"Improve outdated infrastructure around the school grounds"',n:'General but widely felt'},
+    {t:'"Newer buildings and seats and tables" — appeared multiple times',n:'Students notice and care about their physical environment'},
+    {t:'"Better smelling change rooms at PE. Clean toilets."',n:'Basic hygiene and dignity matter'},
+    {t:'"Nicer classrooms"',n:'Learning environment quality is linked to engagement'},
+    {t:'"Use the back of the school a bit more — the grass area"',n:'Existing school resources are underused'}
+   ]},
+  {label:'Lack of wellbeing / mental health support',color:CC[5],mentions:28,tagline:'Students are asking for more visible, accessible support',
+   stats:[{v:'~28',l:'Total mentions'},{v:'#6',l:'Ranked theme'},{v:'Notable',l:'Depth of concern'}],
+   quotes:[
+    {t:'"You could invite more people to the wellbeing room who are having a bad day — I have been invited to the room before but only 2 times in the 2 years I have been here"',n:'The most personal and significant response in the entire survey'},
+    {t:'"Put a sign up near the library telling students where the mental health room is"',n:'Students don\'t know the resource exists — a sign fixes this immediately'},
+    {t:'"Anonymous mental health surveys"',n:'Students want to flag struggles without social exposure'},
+    {t:'"Make sure that people can reach out if they\'re struggling"',n:'Emotional safety is a real concern for a meaningful portion of the cohort'},
+    {t:'"More support to students that have been affected by bad experiences in the classroom"',n:'Directly linking teacher conduct to mental health outcomes'}
+   ]},
+  {label:'Restricted phone access',color:CC[6],mentions:25,tagline:'Students want phone access at recess and lunch, not in class',
+   stats:[{v:'~25',l:'Total mentions'},{v:'#7',l:'Ranked theme'},{v:'Recess/lunch',l:'When requested'}],
+   quotes:[
+    {t:'"Allow phones at recess and lunch" — most common phrasing',n:'Students are not asking for phones in class — specifically social time'},
+    {t:'"Allow Phones In Bally" — written with capitals',n:'This student felt strongly enough to emphasise it'},
+    {t:'"Let us use phones to buy food, check the timetable, and message parents for money for food"',n:'Practical use case — not just entertainment'},
+    {t:'"Allow airpods" — appeared alongside other freedom requests',n:'Part of a broader ask for autonomy during personal time'}
+   ]},
+  {label:'Too much homework / workload',color:CC[7],mentions:18,tagline:'Workload pressure affects student wellbeing and balance',
+   stats:[{v:'~18',l:'Total mentions'},{v:'#8',l:'Ranked theme'},{v:'Math',l:'Most cited subject'}],
+   quotes:[
+    {t:'"Separate assessments by a week — spreading them out is a lot more calming and helps with potential anxiety"',n:'The most thoughtful workload response in the dataset'},
+    {t:'"Less maths homework" and "less English and math"',n:'Specific subjects called out for excess homework'},
+    {t:'"Get a dedicated study period" and "free periods from Year 9–12"',n:'Students want structured in-school time to manage their own work'}
+   ]}
+];
+
+const INFRA=[
+  {label:'Bathrooms unlocked',color:CC[3],mentions:22,tagline:'Basic access — one of the top 3 most repeated requests',detail:'Zero cost. Immediate implementation. Affects every student every single day.',stats:[{v:'22',l:'Mentions'},{v:'Low',l:'Effort'},{v:'High',l:'Impact'}],quotes:[{t:'"Unlock bathrooms at all times"',n:'Appeared in multiple nearly identical forms'},{t:'"Open the bathrooms" — appeared 3+ times word for word',n:'Repetition signals genuine daily frustration'},{t:'"Let us go to the toilet during class"',n:'Students feel this restricts basic dignity'},{t:'"Unlock the bathrooms during periods"',n:'During-class access specifically requested'}]},
+  {label:'Sport equipment / courts',color:CC[1],mentions:20,tagline:'Students want equipment they can use at lunch — PE gear already exists',detail:'PE equipment already exists. Students just need a borrowing system.',stats:[{v:'20',l:'Mentions'},{v:'Low-med',l:'Effort'},{v:'High',l:'Impact'}],quotes:[{t:'"More basketball hoops" — appeared multiple times independently',n:'Most common specific equipment request'},{t:'"Most IMPORTANTLY: work out a system to allow students to borrow balls from PE at lunch"',n:'The emphasis was written by the student themselves'},{t:'"Soccer goals on the quad" and "soccer nets" — multiple independent mentions',n:'Soccer goals mentioned several times'},{t:'"Fix Area A basketball courts"',n:'Existing infrastructure needs maintenance too'}]},
+  {label:'Green space / oval access',color:CC[4],mentions:16,tagline:'Students want grass — and Balgowlah oval across the road',detail:'Two students independently suggested Balgowlah oval — an existing resource currently unused at lunch.',stats:[{v:'16',l:'Mentions'},{v:'Medium',l:'Effort'},{v:'High',l:'Impact'}],quotes:[{t:'"Add grass instead of quad because falling on the quad hurts a lot"',n:'Safety concern embedded in a space request'},{t:'"Maybe at lunch we could go over to Balgowlah oval and play footy"',n:'Existing resource sitting unused across the road'},{t:'"If we can open the oval across the road at lunch so we can all play and be outside"',n:'Two independent students suggested the same oval'},{t:'"Use the back of the school a bit more — the grass area"',n:'Underused school-owned green space'}]},
+  {label:'More seating / benches',color:CC[7],mentions:14,tagline:'Students need places to sit around the quad and play areas',detail:'Low cost. High daily usage. Multiple students asked for benches near courts and the canteen.',stats:[{v:'14',l:'Mentions'},{v:'Low',l:'Effort'},{v:'Medium',l:'Impact'}],quotes:[{t:'"More benches around the school"',n:'Simple and direct'},{t:'"More seating around the play areas" — appeared twice',n:'Near courts and canteen specifically'},{t:'"Some new metal tables would be great to replace those worse wooden ones and will boost morale"',n:'Specific and practical — even noted the material'}]},
+  {label:'New buildings / renovations',color:CC[2],mentions:12,tagline:'Students notice the age of the physical environment',detail:'Long-term aspiration. Students are conscious of the campus age and want a more modern feel.',stats:[{v:'12',l:'Mentions'},{v:'High',l:'Effort'},{v:'Medium',l:'Impact'}],quotes:[{t:'"Newer buildings and equipment" — appeared twice nearly identically',n:'Independently requested'},{t:'"Building a newer more modern area of the school or do renovations somewhere"',n:'Students notice the age of the campus'},{t:'"New surfaces for Area A and the quad"',n:'Specific surface requests tied to sport and safety'}]},
+  {label:'Shade / shelter',color:CC[0],mentions:7,tagline:'Wet weather stops students from being active outdoors',detail:'Sydney winters are real. Shade structures are a one-time cost that unlocks year-round outdoor activity.',stats:[{v:'7',l:'Mentions'},{v:'Medium',l:'Effort'},{v:'Medium',l:'Impact'}],quotes:[{t:'"More cover for the handball courts and basketball courts as when it rains it is hard to play"',n:'Practical — Sydney winters do get wet'},{t:'"More shelter for when it rains"',n:'General request for covered outdoor spaces'}]},
+  {label:'Bike racks',color:CC[5],mentions:5,tagline:'Students who ride to school need secure, dedicated parking',detail:'Quick, cheap, and supports active transport to school.',stats:[{v:'5',l:'Mentions'},{v:'Low',l:'Effort'},{v:'Low-med',l:'Impact'}],quotes:[{t:'"Specific bike racks" and "Add some more areas for bike parking"',n:'Both appeared independently — cyclists feel underserved'}]},
+  {label:'More microwaves',color:CC[6],mentions:5,tagline:'Students who bring food from home want to heat it',detail:'Low cost, high convenience for students with packed lunches.',stats:[{v:'5',l:'Mentions'},{v:'Low',l:'Effort'},{v:'Low-med',l:'Impact'}],quotes:[{t:'"More microwaves" — appeared twice independently',n:'Simple quality-of-life improvement'}]}
+];
+
+const MATRIX=[
+  {label:'Unlock bathrooms',x:8.5,y:8.5,r:14,color:'rgba(91,74,138,.85)',detail:'Zero cost. Immediate. Affects every student every day.',quotes:['"Unlock bathrooms at all times" — top 3 most repeated request in the survey.']},
+  {label:'Ball borrowing from PE',x:8,y:8,r:11,color:'rgba(0,85,153,.85)',detail:'PE equipment already exists. Just needs a sign-out system.',quotes:['"Most IMPORTANTLY: work out a system to allow students to borrow balls from PE at lunch"']},
+  {label:'Canteen price review',x:5,y:9.5,r:20,color:'rgba(200,151,26,.9)',detail:'#1 theme. ~110 mentions. Even small price drops would have outsized morale impact.',quotes:['"Lower the prices — also make Waterfords $3.50 not $4!!"']},
+  {label:'Sign for mental health room',x:9.5,y:8.5,r:9,color:'rgba(160,54,90,.85)',detail:'Possibly the easiest win in the dataset. One sign. Students don\'t know the resource exists.',quotes:['"Put a sign up near the library telling students where the mental health room is"']},
+  {label:'Wellbeing room outreach',x:8,y:9,r:10,color:'rgba(160,54,90,.6)',detail:'No cost. Requires only a shift in proactive staff behaviour.',quotes:['"I have been invited to the room before but only 2 times in the 2 years I have been here"']},
+  {label:'Anonymous mental health surveys',x:7.5,y:8,r:9,color:'rgba(160,54,90,.38)',detail:'Low-barrier channel for students to flag struggling.',quotes:['"Anonymous mental health surveys" — appeared multiple times independently']},
+  {label:'More seating / benches',x:6,y:7,r:11,color:'rgba(107,96,85,.85)',detail:'~14 mentions. Low cost. High daily impact.',quotes:['"More benches around the school" and "more places to sit around the play areas"']},
+  {label:'Stagger assessments',x:6.5,y:8.5,r:9,color:'rgba(200,151,26,.65)',detail:'A scheduling change, not a resource change. Reduces anxiety at no cost.',quotes:['"Separate assessments by a week — it\'s a lot more calming and helps with potential anxiety"']},
+  {label:'Lunchtime oval access',x:4,y:8.5,r:13,color:'rgba(46,107,94,.75)',detail:'Balgowlah oval is right across the road. Two students independently suggested it.',quotes:['"Maybe at lunch we could go over to Balgowlah oval and play footy and stuff"']},
+  {label:'Teacher culture reform',x:2,y:9.5,r:15,color:'rgba(139,26,26,.85)',detail:'~45 mentions. Hardest to implement but highest impact. Requires leadership engagement.',quotes:['"Teachers should stop screaming at kids and using fear to get kids to do what they want"','"Teachers here that scream... have a profoundly negative impact on students\' wellbeing"']},
+  {label:'Add shade / shelter',x:5,y:7,r:9,color:'rgba(200,151,26,.45)',detail:'One-time cost. Unlocks outdoor activity in wet weather.',quotes:['"More cover for the handball courts as when it rains it is hard to play"']},
+  {label:'New buildings / renos',x:1.5,y:5.5,r:10,color:'rgba(61,107,46,.7)',detail:'High effort and capital cost. Long-term aspiration.',quotes:['"Newer buildings and equipment" — appeared twice nearly identically']}
+];
+
+/* ── MODAL ────────────────────────────────────────── */
+let msc=null;
+function openM(d){
+  const rawCol=d.color&&d.color.startsWith('rgba')?d.color.replace(/[\d.]+\)$/,'1)'):d.color||'#003057';
+  document.getElementById('mh').style.background=rawCol;
+  document.getElementById('mt').textContent=d.label;
+  document.getElementById('mti').textContent=d.label;
+  document.getElementById('mta').textContent=d.tagline||'';
+  let b='';
+  if(d.stats){b+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem">';d.stats.forEach(s=>{b+=`<div class="mstat"><div class="v">${s.v}</div><div class="l">${s.l}</div></div>`});b+='</div>'}
+  if(d.detail) b+=`<div class="mdetail">${d.detail}</div>`;
+  if(d.subChart){const sc=d.subChart;b+=`<div class="msub-head">Breakdown</div><div style="font-size:12px;color:#7A93AD;margin-bottom:.75rem">${sc.note}</div><div style="position:relative;width:100%;height:${sc.type==='doughnut'?220:200}px;margin-bottom:1rem"><canvas id="msc2"></canvas></div>`}
+  if(d.quotes&&d.quotes.length){b+='<div class="msub-head">What students said</div>';d.quotes.forEach(q=>{const txt=typeof q==='string'?q:q.t,note=typeof q==='object'?q.n:null;b+=`<div class="mquote" style="border-left-color:${rawCol}">${txt}${note?`<div class="mn">${note}</div>`:''}</div>`})}
+  document.getElementById('mbo').innerHTML=b;
+  document.getElementById('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(d.subChart){setTimeout(()=>{if(msc){msc.destroy();msc=null}const sc=d.subChart,el=document.getElementById('msc2');if(!el)return;msc=new Chart(el,{type:sc.type,data:{labels:sc.labels,datasets:[{data:sc.data,backgroundColor:sc.colors,borderWidth:0,borderRadius:sc.type==='bar'?4:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:sc.type==='doughnut',position:'bottom',labels:{font:{size:11},boxWidth:10,padding:8}}},...(sc.type==='bar'?{scales:{x:{grid:{display:false},ticks:{font:{size:10},maxRotation:0,autoSkip:false}},y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11}}}}}:{cutout:'60%'})}})},60)}
+}
+function closeM(){document.getElementById('ov').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('mc').addEventListener('click',closeM);
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))closeM()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+/* ── CHARTS ───────────────────────────────────────── */
+const gc='rgba(0,30,60,0.06)', tc='#7A93AD', lc='#0D1F35';
+
+const tC=new Chart(document.getElementById('themeChart'),{
+  type:'bar',
+  data:{labels:THEMES.map(d=>d.label),datasets:[{data:THEMES.map(d=>d.mentions),backgroundColor:THEMES.map(d=>d.color),borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x} mentions — click to explore`},backgroundColor:'#001f3d',titleColor:'#E0AE30',bodyColor:'rgba(255,255,255,.8)'}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:12}},title:{display:true,text:'approximate mentions',color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:lc,font:{size:12}}}},
+    onHover:(e,els)=>{e.native.target.style.cursor=els.length?'pointer':'default'}}
+});
+document.getElementById('themeChart').addEventListener('click',e=>{const p=tC.getElementsAtEventForMode(e,'nearest',{intersect:true},false);if(p.length)openM(THEMES[p[0].index])});
+
+const iC=new Chart(document.getElementById('infraChart'),{
+  type:'bar',
+  data:{labels:['Bathrooms\nunlocked','Sport\nequipment','Green space\n/ oval','More\nseating','New buildings\n/ renos','Shade\n/ shelter','Bike\nracks','More\nmicrowaves'],
+    datasets:[{data:[22,20,16,14,12,7,5,5],backgroundColor:[CC[3],CC[1],CC[4],CC[7],CC[2],CC[0],CC[5],CC[6]],borderRadius:4}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.y} mentions — click to explore`},backgroundColor:'#001f3d',titleColor:'#E0AE30',bodyColor:'rgba(255,255,255,.8)'}},
+    scales:{x:{grid:{display:false},ticks:{color:lc,font:{size:11},maxRotation:0,autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc},title:{display:true,text:'mentions',color:tc,font:{size:11}}}},
+    onHover:(e,els)=>{e.native.target.style.cursor=els.length?'pointer':'default'}}
+});
+document.getElementById('infraChart').addEventListener('click',e=>{const p=iC.getElementsAtEventForMode(e,'nearest',{intersect:true},false);if(p.length)openM(INFRA[p[0].index])});
+
+const mC=new Chart(document.getElementById('matrixChart'),{
+  type:'bubble',
+  data:{datasets:MATRIX.map(d=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:d.color}))},
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:20},
+    plugins:{legend:{display:true,position:'bottom',labels:{color:lc,font:{size:11},boxWidth:10,padding:10}},
+      tooltip:{callbacks:{label:c=>`${c.dataset.label} — click to explore`},backgroundColor:'#001f3d',titleColor:'#E0AE30',bodyColor:'rgba(255,255,255,.8)'}},
+    scales:{x:{min:0,max:10,grid:{color:gc},ticks:{color:tc},title:{display:true,text:'ease of implementation  →',color:tc,font:{size:11}}},
+      y:{min:0,max:10,grid:{color:gc},ticks:{color:tc},title:{display:true,text:'student impact  →',color:tc,font:{size:11}}}},
+    onHover:(e,els)=>{e.native.target.style.cursor=els.length?'pointer':'default'}}
+});
+document.getElementById('matrixChart').addEventListener('click',e=>{const p=mC.getElementsAtEventForMode(e,'nearest',{intersect:true},false);if(p.length){const d=MATRIX[p[0].datasetIndex];openM({label:d.label,color:d.color,tagline:`Ease ${d.x}/10 · Impact ${d.y}/10`,detail:d.detail,quotes:d.quotes})}});
+
+/* ── FADE IN ──────────────────────────────────────── */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
